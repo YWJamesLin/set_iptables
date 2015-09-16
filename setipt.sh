@@ -90,11 +90,10 @@ done
 #iptables -A INPUT -i ${OutIF} -p TCP --dport 443 --sport 1024:65534 -j ACCEPT
 
 #   IPSec VPN
-#iptables -A INPUT -i ${OutIF} -p ESP -j ACCEPT
-#iptables -A INPUT -i ${OutIF} -p AH -j ACCEPT
-#iptables -A INPUT -i ${OutIF} -p UDP --dport 68 --sport 1024:65534 -j ACCEPT
-#iptables -A INPUT -i ${OutIF} -p UDP --dport 500 --sport 1024:65534 -j ACCEPT
-#iptables -A INPUT -i ${OutIF} -p UDP --dport 4500 --sport 1024:65534 -j ACCEPT
+#iptables -A INPUT -p ESP -j ACCEPT
+#iptables -A INPUT -p AH -j ACCEPT
+#iptables -A INPUT -p UDP --dport 500 -j ACCEPT
+#iptables -A INPUT -p UDP --dport 4500 -j ACCEPT
 #iptables -t nat -A POSTROUTING -o ${OutIF} -s 10.1.0.0/16 -j MASQUERADE
 
 # Save Configuration
