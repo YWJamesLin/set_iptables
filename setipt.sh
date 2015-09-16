@@ -76,17 +76,15 @@ done
 #iptables -A INPUT -i ${OutIF} -p TCP --dport 110 --sport 1024:65534 -j ACCEPT
 
 #   SAMBA
-#iptables -A INPUT -i ${OutIF} -p TCP --dport 139,445 --sport 1024:65534 -j ACCEPT
-#iptables -A INPUT -i ${OutIF} -p UDP --dport 137,138 --sport 1024:65534 -j ACCEPT
+#iptables -A INPUT -i ${OutIF} -p TCP --dport 139 --sport 1024:65534 -j ACCEPT
+#iptables -A INPUT -i ${OutIF} -p TCP --dport 445 --sport 1024:65534 -j ACCEPT
+#iptables -A INPUT -i ${OutIF} -p UDP --dport 137 --sport 1024:65534 -j ACCEPT
+#iptables -A INPUT -i ${OutIF} -p UDP --dport 138 --sport 1024:65534 -j ACCEPT
 
 #   NFS
-#iptables -A INPUT -i ${OUTIF} -p UDP --dport 111 --sport 1024:65534 -j ACCEPT
 #iptables -A INPUT -i ${OUTIF} -p TCP --dport 111 --sport 1024:65534 -j ACCEPT
-<<<<<<< HEAD
-#iptables -A INPUT -i ${OUTIF} -p UDP --dport 111,893 --sport 1024:65534 -j ACCEPT
-=======
+#iptables -A INPUT -i ${OUTIF} -p UDP --dport 111 --sport 1024:65534 -j ACCEPT
 #iptables -A INPUT -i ${OUTIF} -p UDP --dport 893 --sport 1024:65534 -j ACCEPT
->>>>>>> parent of 82d1a30... Updated
 
 #   HTTPS
 #iptables -A INPUT -i ${OutIF} -p TCP --dport 443 --sport 1024:65534 -j ACCEPT
@@ -94,7 +92,8 @@ done
 #   IPSec VPN
 #iptables -A INPUT -i ${OutIF} -p esp -j ACCEPT
 #iptables -A INPUT -i ${OutIF} -p ah -j ACCEPT
-#iptables -A INPUT -i ${OutIF} -p udp --dport 500,4500 --sport 1024:65534 -j ACCEPT
+#iptables -A INPUT -i ${OutIF} -p udp --dport 500 --sport 1024:65534 -j ACCEPT
+#iptables -A INPUT -i ${OutIF} -p udp --dport 4500 --sport 1024:65534 -j ACCEPT
 #iptables -t nat -A POSTROUTING -o ${OutIF} -s 10.1.0.0/16 -j MASQUERADE
 
 # Save Configuration
