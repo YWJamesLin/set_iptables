@@ -80,9 +80,8 @@ done
 #iptables -A INPUT -i ${OutIF} -p TCP --dport 139:445 --sport 1024:65534 -j ACCEPT
 
 #   NFS
-#iptables -A INPUT -i ${OUTIF} -p UDP --dport 111 --sport 1024:65534 -j ACCEPT
 #iptables -A INPUT -i ${OUTIF} -p TCP --dport 111 --sport 1024:65534 -j ACCEPT
-#iptables -A INPUT -i ${OUTIF} -p UDP --dport 893 --sport 1024:65534 -j ACCEPT
+#iptables -A INPUT -i ${OUTIF} -p UDP --dport 111:893 --sport 1024:65534 -j ACCEPT
 
 #   HTTPS
 #iptables -A INPUT -i ${OutIF} -p TCP --dport 443 --sport 1024:65534 -j ACCEPT
