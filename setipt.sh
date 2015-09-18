@@ -82,9 +82,9 @@ done
 #iptables -A INPUT -i ${OutIF} -p UDP --dport 138 --sport 1024:65534 -j ACCEPT
 
 #   NFS
-#iptables -A INPUT -i ${OUTIF} -p TCP --dport 111 --sport 1024:65534 -j ACCEPT
-#iptables -A INPUT -i ${OUTIF} -p UDP --dport 111 --sport 1024:65534 -j ACCEPT
-#iptables -A INPUT -i ${OUTIF} -p UDP --dport 893 --sport 1024:65534 -j ACCEPT
+#iptables -A INPUT -i ${OutIF} -p TCP --dport 111 --sport 1024:65534 -j ACCEPT
+#iptables -A INPUT -i ${OutIF} -p UDP --dport 111 --sport 1024:65534 -j ACCEPT
+#iptables -A INPUT -i ${OutIF} -p UDP --dport 893 --sport 1024:65534 -j ACCEPT
 
 #   HTTPS
 #iptables -A INPUT -i ${OutIF} -p TCP --dport 443 --sport 1024:65534 -j ACCEPT
@@ -94,6 +94,10 @@ done
 #iptables -A INPUT -p AH -j ACCEPT
 #iptables -A INPUT -p UDP --dport 500 -j ACCEPT
 #iptables -A INPUT -p UDP --dport 4500 -j ACCEPT
+#iptables -t nat -A POSTROUTING -o ${OutIF} -s 10.1.0.0/16 -j MASQUERADE
+
+#   OpenVPN VPN
+#iptables -A INPUT -i ${OutIF} -p UDP --dport 1194 --sport 1024:65534 -j ACCEPT
 #iptables -t nat -A POSTROUTING -o ${OutIF} -s 10.1.0.0/16 -j MASQUERADE
 
 # Save Configuration
