@@ -1,18 +1,19 @@
 #!/bin/bash
 # Setting iptables rules
 # Debugging Mode is to apply ACCEPT policy on Filter-INPUT chain
-# 2014.12.20 Created By YWJamesLin 2015.09.16 Last Modified
+# 2014.12.20 Created By YWJamesLin 2015.12.07 Last Modified
 
 # Setting Variables
-PATH="/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/sbin:/usr/local/bin"
+PATH="/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin"
 OutIF="eth0"
 PolPath="/usr/local/share/iptables"
 
+#0 with Input Accept as default, 1 with Input Drop as default
+Mode="${1}"
+
 # Mode Checking
-read -p "Installing in which mode?(0:Normal 1:Debugging)" Mode
 if [ ${Mode} != 0 ] && [ ${Mode} != 1 ];then
-  echo "Mode Error!!"
-  exit 1
+  read -p "Installing in which mode?(0:Normal 1:Debugging)" Mode
 fi
 
 # Initialize Kernel Configuration
@@ -94,11 +95,13 @@ done
 #iptables -A INPUT -p AH -j ACCEPT
 #iptables -A INPUT -p UDP --dport 500 -j ACCEPT
 #iptables -A INPUT -p UDP --dport 4500 -j ACCEPT
-#iptables -t nat -A POSTROUTING -o ${OutIF} -s 10.1.0.0/16 -j MASQUERADE
 
 #   OpenVPN VPN
 #iptables -A INPUT -i ${OutIF} -p UDP --dport 1194 --sport 1024:65534 -j ACCEPT
-#iptables -t nat -A POSTROUTING -o ${OutIF} -s 10.1.0.0/16 -j MASQUERADE
+
+#   MASQUERADE
+#iptables -t nat -A POSTROUTING -s 10.0.0.0/8 -m policy --dir out --pol ipsec -j ACCEPT
+#iptables -t nat -A POSTROUTING -o ${OutIF} -s 10.0.0.0/8 -j MASQUERADE
 
 # Save Configuration
 /etc/init.d/iptables save
