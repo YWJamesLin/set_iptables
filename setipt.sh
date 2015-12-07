@@ -70,7 +70,7 @@ done
 #iptables -A INPUT -i ${OutIF} -p TCP --dport 53 --sport 1024:65534 -j ACCEPT
 #iptables -A INPUT -i ${OutIF} -p UDP --dport 53 --sport 1024:65534 -j ACCEPT
 
-#   WWW
+#   HTTP
 #iptables -A INPUT -i ${OutIF} -p TCP --dport 80 --sport 1024:65534 -j ACCEPT
 
 #   POP3
