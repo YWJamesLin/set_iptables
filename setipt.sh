@@ -1,12 +1,11 @@
 #!/bin/bash
 # Setting iptables rules
 # Debugging Mode is to apply ACCEPT policy on Filter-INPUT chain
-# 2014.12.20 Created By YWJamesLin 2015.12.07 Last Modified
+# 2014.12.20 Created By YWJamesLin
 
 # Setting Variables
 PATH="/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin"
 OutIF="eth0"
-PolPath="/usr/local/share/iptables"
 
 #0 with Input Accept as default, 1 with Input Drop as default
 Mode="${1}"
@@ -17,10 +16,11 @@ if [ ${Mode} != 0 ] && [ ${Mode} != 1 ];then
 fi
 
 # Initialize Kernel Configuration
-for i in /proc/sys/net/ipv4/{tcp_syncookies,icmp_echo_ignore_broadcasts,conf/eth0/log_martians,ip_forward}; do
+for i in /proc/sys/net/ipv4/{tcp_syncookies,icmp_echo_ignore_broadcasts,conf/${OutIF}/log_martians,ip_forward}; do
   echo "1" > ${i}
 done
-for j in /proc/sys/net/ipv4/conf/eth0/{accept_source_route,accept_redirects,send_redirects}; do
+
+for j in /proc/sys/net/ipv4/conf/${OutIF}/{accept_source_route,accept_redirects,send_redirects}; do
   echo "0" > ${j}
 done
 
@@ -41,13 +41,6 @@ iptables -P FORWARD ACCEPT
 # Filter Common policy
 iptables -A INPUT -i lo -j ACCEPT
 iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
-
-# Include other Policies
-for i in ${PolPath}/{iptables.deny,iptables.allow,iptables.http}; do
-  if [ -f ${i} ]; then 
-    sh ${i}
-  fi
-done
 
 # Accept some ICMP packets
 AICMP="0 3 4 11 12 14 16 18"
@@ -102,6 +95,3 @@ done
 #   MASQUERADE
 #iptables -t nat -A POSTROUTING -s 10.0.0.0/8 -m policy --dir out --pol ipsec -j ACCEPT
 #iptables -t nat -A POSTROUTING -o ${OutIF} -s 10.0.0.0/8 -j MASQUERADE
-
-# Save Configuration
-/etc/init.d/iptables save
